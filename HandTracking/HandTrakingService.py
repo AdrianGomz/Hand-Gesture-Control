@@ -63,7 +63,6 @@ class HandTrackingService():
         print("Class:", class_name[2:], end="")
         print("Confidence Score:", str(np.round(confidence_score * 100))[:-2], "%")
     def classifyGesture(self, img):
-        return
         classifier = Classifier("resources/keras_Model.h5", "resources/labels.txt")
         print(classifier.getPrediction(img))
 
