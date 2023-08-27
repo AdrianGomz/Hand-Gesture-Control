@@ -14,9 +14,11 @@ drawingService = DrawingService.DrawingService()
 
 while True:
     confirm, img=camera.read()
+    
     lmList = handTrackerService.getHandLandmarks(img)
     drawingService.drawHands(img,lmList)
-    drawingService.drawHandBoundaries(img,lmList)
+    hand_boundaries = handTrackerService.getHandBoundaries(img.shape[0],img.shape[1],lmList)
+    drawingService.drawHandBoundaries(img,hand_boundaries)
 
 
 

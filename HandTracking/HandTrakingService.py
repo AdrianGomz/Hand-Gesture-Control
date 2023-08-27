@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import numpy as np
 
 class HandTrackingService():
     def __init__(self, static_mode=False, max_hands=2, detection_confidence=0.5, tracking_confidence=0.5):
@@ -22,12 +23,19 @@ class HandTrackingService():
 
 
 
-    def handPoints(self, frame, handNo=0, draw=True):
-        landmark_list=[]
-        if self.processed_image.multi_hand_landmarks:
-            hand=self.processed_image.multi_hand_landmarks[handNo]
-            for id, landmark in enumerate(hand.landmark):
-                    height, width, color= frame.shape
-                    Px, Py=int(landmark.x*width),int(landmark.y*height)
-                    landmark_list.append([id,Px,Py])
-        return landmark_list
+    def getHandBoundaries(self, image_height, image_width, hand_landmarks):
+        if hand_landmarks:
+            boundaries = []
+            for hand in hand_landmarks:
+                landmark_array = np.empty((0, 2), int)
+                for id, landmark in enumerate(hand.landmark):
+                    landmark_x = min(int(landmark.x * image_width), image_width - 1)
+                    landmark_y = min(int(landmark.y * image_height), image_height - 1)
+
+                    landmark_point = [np.array((landmark_x, landmark_y))]
+
+                    landmark_array = np.append(landmark_array, landmark_point, axis=0)
+
+                x, y, w, h = cv2.boundingRect(landmark_array)
+                boundaries.append([x,y,w,h])
+            return boundaries
