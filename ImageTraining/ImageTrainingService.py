@@ -38,7 +38,7 @@ class ImageTrainingService():
 
             if cv2.waitKey(1) & 0xFF == ord('s'):
                 self.counter+=1
-                cv2.imwrite(f'resources/a/image_{time.time()}.jpg', imgBackground)
+                cv2.imwrite(f'trainingImages/b/image_{time.time()}.jpg', imgBackground)
                 print(self.counter)
 
             return imgBackground

@@ -1,6 +1,8 @@
 import cv2
 import mediapipe as mp
 import numpy as np
+from keras.models import load_model
+from cvzone.ClassificationModule import Classifier
 
 class HandTrackingService():
     def __init__(self, static_mode=False, max_hands=2, detection_confidence=0.5, tracking_confidence=0.5):
@@ -39,3 +41,29 @@ class HandTrackingService():
                 x, y, w, h = cv2.boundingRect(landmark_array)
                 boundaries.append([x,y,w,h])
             return boundaries
+        
+    def classifyGestureKeras(self, img):
+
+        model = load_model("resources/keras_Model.h5", compile=False)
+
+        class_names = open("resources/labels.txt", "r").readlines()
+        image = cv2.resize(img, (224, 224), interpolation=cv2.INTER_AREA)
+        image = np.asarray(image, dtype=np.float32).reshape(1, 224, 224, 3)
+
+
+        image = (image / 127.5) - 1
+
+        # Predicts the model
+        prediction = model.predict(image)
+        index = np.argmax(prediction)
+        class_name = class_names[index]
+        confidence_score = prediction[0][index]
+
+        # Print prediction and confidence score
+        print("Class:", class_name[2:], end="")
+        print("Confidence Score:", str(np.round(confidence_score * 100))[:-2], "%")
+    def classifyGesture(self, img):
+        return
+        classifier = Classifier("resources/keras_Model.h5", "resources/labels.txt")
+        print(classifier.getPrediction(img))
+
