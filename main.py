@@ -3,6 +3,7 @@ import HandTracking.HandTrakingService as HandTrackingService
 import Drawing.DrawingService as DrawingService
 import ImageTraining.ImageTrainingService as ImageTrainingService
 import numpy as np
+import time
 
 
 getTrainingImages = True
@@ -21,22 +22,21 @@ while True:
     trainingBackground = np.ones((img.shape[0], img.shape[1], 3),np.uint8)
     
     lmList = handTrackerService.getHandLandmarks(img)
+
     if lmList:
         drawingService.drawHands(img,lmList)
         drawingService.drawHands(trainingBackground, lmList)
-        hand_boundaries = handTrackerService.getHandBoundaries(img.shape[0],img.shape[1],lmList)
+        hand_boundaries = handTrackerService.getHandBoundaries(img.shape[0], img.shape[1], lmList)
         drawingService.drawHandBoundaries(img,hand_boundaries)
 
         if getTrainingImages:
-            imageTrainigService.getTrainingImage(trainingBackground, hand_boundaries)
-
-        
-
-
+            trainingImage = imageTrainigService.getTrainingImage(trainingBackground, hand_boundaries)
 
     cv2.imshow("Camara", img)
+    
     if getTrainingImages:
         cv2.imshow("handsLandmarks", trainingBackground)
+        
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

@@ -1,10 +1,12 @@
 import cv2
 import numpy as np
 import math
+import time
 
 class ImageTrainingService():
     def __init__(self):
         self.imageSize = 300
+        self.counter = 0
 
     def getTrainingImage(self, img, boundaries):
         if boundaries:
@@ -33,6 +35,12 @@ class ImageTrainingService():
 
 
             cv2.imshow("TrainerImage",imgBackground)
-            cv2.waitKey(1)
+
+            if cv2.waitKey(1) & 0xFF == ord('s'):
+                self.counter+=1
+                cv2.imwrite(f'resources/a/image_{time.time()}.jpg', imgBackground)
+                print(self.counter)
+
+            return imgBackground
 
 
