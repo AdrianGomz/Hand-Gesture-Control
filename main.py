@@ -31,7 +31,8 @@ while True:
 
         if getTrainingImages:
             trainingImage = imageTrainigService.getTrainingImage(trainingBackground, hand_boundaries)
-            handTrackerService.classifyGesture(img)
+            class_label = handTrackerService.classifyGesture(trainingImage)
+            drawingService.drawLabel(img, class_label, hand_boundaries)
             
 
     cv2.imshow("Camara", img)
