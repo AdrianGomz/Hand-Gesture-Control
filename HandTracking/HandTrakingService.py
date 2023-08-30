@@ -40,18 +40,20 @@ class HandTrackingService():
                 boundaries.append([x,y,w,h])
             return boundaries
         
-    def classifyGesture(self, img):
-        
-        class_names = open("resources/labels.txt", "r").readlines()
-        image = cv2.resize(img, (224, 224), interpolation=cv2.INTER_AREA)
-        cv2.imshow("test",image)
-        image = np.asarray(image, dtype=np.float32).reshape(1, 224, 224, 3)
+    def classifyGesture(self, images):
+        class_names_labels = []
+        for img in images:
+            class_names = open("resources/labels.txt", "r").readlines()
+            image = cv2.resize(img, (224, 224), interpolation=cv2.INTER_AREA)
+            cv2.imshow("test",image)
+            image = np.asarray(image, dtype=np.float32).reshape(1, 224, 224, 3)
 
-        image = (image / 127.5) - 1
+            image = (image / 127.5) - 1
 
-        prediction = self.keras_model.predict(image)
-        index = np.argmax(prediction)
-        class_name = class_names[index]
+            prediction = self.keras_model.predict(image)
+            index = np.argmax(prediction)
+            class_name = class_names[index]
 
-        return class_name[2:-1]
+            class_names_labels.append(class_name[2:-1])
+        return class_names_labels
 

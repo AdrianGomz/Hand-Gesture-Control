@@ -19,6 +19,9 @@ class DrawingService():
     def drawBoundaries(self, img, min_x, max_x, min_y, max_y, color = (255, 0, 0),thickness=1):
         cv2.rectangle(img, (min_x, min_y),(max_x, max_y), color, thickness)
 
-    def drawLabel(self, img, label, boundaries):
-        if label and label != "":
-            cv2.putText(img, label, (boundaries[0][0],boundaries[0][1]-10), cv2.FONT_HERSHEY_COMPLEX, 1, (255,0,0), 2, cv2.LINE_AA)         
+    def drawLabel(self, img, labels, boundaries):
+        if labels == None or boundaries == None:
+            return
+        for i in range(len(labels)):
+            if labels[i] != "":
+                cv2.putText(img, labels[i], (boundaries[i][0],boundaries[i][1]-10), cv2.FONT_HERSHEY_COMPLEX, 1, (255,0,0), 2, cv2.LINE_AA)         
