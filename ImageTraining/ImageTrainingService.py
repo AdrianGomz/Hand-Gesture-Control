@@ -13,6 +13,8 @@ class ImageTrainingService():
             offset = 10
             hand_proced_images = []
             for boundary in boundaries:
+                if boundary[0]-offset<0 or boundary[1]-offset<0:
+                    continue
                 x, y, w, h = boundary
 
                 imgBackground = np.ones((self.imageSize, self.imageSize,3),np.uint8)
