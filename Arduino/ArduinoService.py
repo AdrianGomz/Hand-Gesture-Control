@@ -1,7 +1,7 @@
 import pyfirmata
 
 ard=pyfirmata.Arduino("COM5")
-pin_states = {1:0,2:0,3:0,4:0,5:0}
+pin_states = {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0}
 
 
 def toggle_digital_out(pin):

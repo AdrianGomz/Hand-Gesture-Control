@@ -17,7 +17,7 @@ handTrackerService=HandTrackingService.HandTrackingService(detection_confidence=
 drawingService = DrawingService.DrawingService()
 imageTrainigService = ImageTrainingService.ImageTrainingService()
 
-spotifyAdapter = SpotifyAdapter()
+spotifyAdapter = SpotifyAdapter.SpotifyAdapter()
 spotifyAdapter.authenticate_user()
 spotifyAdapter.get_auth_code()
 spotifyAdapter.get_access_token()
