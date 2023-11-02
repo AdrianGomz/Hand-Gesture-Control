@@ -3,7 +3,7 @@ import HandTracking.HandTrakingService as HandTrackingService
 import Drawing.DrawingService as DrawingService
 import ImageTraining.ImageTrainingService as ImageTrainingService
 import GestureHandler.GestureHandler as gestureHandler
-from SpotifyAdapter import SpotifyAdapter
+import SpotifyAdapter.SpotifyAdapter as spAdapter
 import numpy as np
 
 
@@ -17,8 +17,8 @@ handTrackerService=HandTrackingService.HandTrackingService(detection_confidence=
 drawingService = DrawingService.DrawingService()
 imageTrainigService = ImageTrainingService.ImageTrainingService()
 
-spotifyAdapter = SpotifyAdapter()
-spotifyAdapter.authenticate_user()
+spotifyAdapter = spAdapter.SpotifyAdapter()
+# spotifyAdapter.authenticate_user()
 spotifyAdapter.get_auth_code()
 spotifyAdapter.get_access_token()
 
