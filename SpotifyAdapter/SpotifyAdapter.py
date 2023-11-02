@@ -20,14 +20,14 @@ class SpotifyAdapter:
             cls._instance = super(SpotifyAdapter, cls).__new__(cls)
         return cls._instance
     
-    def authenticate_user(self):
-        auth_endpoint = self.url_accounts[:]+"/authorize"
-        auth_endpoint += '?response_type=code'
-        auth_endpoint += '&client_id=' + self.client_id
-        auth_endpoint += '&scope=' + self.scope
-        auth_endpoint += '&redirect_uri=' + self.redirect_uri
-        # response = requests.get(self.url)
-        webbrowser.open(auth_endpoint)
+    # def authenticate_user(self):
+    #     auth_endpoint = self.url_accounts[:]+"/authorize"
+    #     auth_endpoint += '?response_type=code'
+    #     auth_endpoint += '&client_id=' + self.client_id
+    #     auth_endpoint += '&scope=' + self.scope
+    #     auth_endpoint += '&redirect_uri=' + self.redirect_uri
+    #     # response = requests.get(self.url)
+    #     webbrowser.open(auth_endpoint)
 
     def get_auth_code(self):
         authCodeResponse = requests.get(self.redirect_uri+"/code")
