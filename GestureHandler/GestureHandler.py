@@ -1,10 +1,10 @@
-import Arduino.ArduinoService as ArduinoService
+# import Arduino.ArduinoService as ArduinoService
 import SpotifyAdapter.SpotifyAdapter as SpotifyAdapter
-
+import requests
 
 previous_gestures = []
 spotifyAdapter = SpotifyAdapter.SpotifyAdapter()
-
+esp8266_port = "192.168.204"
 
 
 def handle_gestures(gesture_list):
@@ -29,19 +29,22 @@ def handle_gestures(gesture_list):
         return
     # Arduino leds
     if "L" in gesture_list and "1" in gesture_list:
-        ArduinoService.toggle_digital_out(2)
+        requests.get(esp8266_port+"/light?num=1")
+        # ArduinoService.toggle_digital_out(2)
     if "L" in gesture_list and "2" in gesture_list:
-        ArduinoService.toggle_digital_out(3)
+        # ArduinoService.toggle_digital_out(3)
+        requests.get(esp8266_port+"/light?num=2")
     if "L" in gesture_list and "3" in gesture_list:
-        ArduinoService.toggle_digital_out(4)
+        # ArduinoService.toggle_digital_out(4)
+        requests.get(esp8266_port+"/light?num=3")
    
     # Arduiono vent
     if "A" in gesture_list and "1" in gesture_list:
-        print("A  1")
-        ArduinoService.toggle_digital_out(5)
+        # ArduinoService.toggle_digital_out(5)
+        requests.get(esp8266_port+"/fan?num=1")
     if "A" in gesture_list and "2" in gesture_list:
-        print("A  2")
-        ArduinoService.toggle_digital_out(6)
+        # ArduinoService.toggle_digital_out(6)
+        requests.get(esp8266_port+"/fan?num=2")
     
     # Spotify
     if "C" in gesture_list and "1" in gesture_list:
