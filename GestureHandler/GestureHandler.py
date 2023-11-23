@@ -29,22 +29,37 @@ def handle_gestures(gesture_list):
         return
     # Arduino leds
     if "L" in gesture_list and "1" in gesture_list:
-        requests.get(esp8266_port+"/light?num=1")
+        try:
+            requests.get(esp8266_port+"/light?num=1")
+        except:
+            pass
         # ArduinoService.toggle_digital_out(2)
     if "L" in gesture_list and "2" in gesture_list:
         # ArduinoService.toggle_digital_out(3)
-        requests.get(esp8266_port+"/light?num=2")
+        try:
+            requests.get(esp8266_port+"/light?num=2")
+        except:
+            pass
     if "L" in gesture_list and "3" in gesture_list:
         # ArduinoService.toggle_digital_out(4)
-        requests.get(esp8266_port+"/light?num=3")
-   
+        try:
+            requests.get(esp8266_port+"/light?num=3")
+        except:
+            pass
+
     # Arduiono vent
     if "A" in gesture_list and "1" in gesture_list:
         # ArduinoService.toggle_digital_out(5)
-        requests.get(esp8266_port+"/fan?num=1")
+        try:
+            requests.get(esp8266_port+"/fan?num=1")
+        except:
+            pass
     if "A" in gesture_list and "2" in gesture_list:
         # ArduinoService.toggle_digital_out(6)
-        requests.get(esp8266_port+"/fan?num=2")
+        try:
+            requests.get(esp8266_port+"/fan?num=2")
+        except:
+            pass
     
     # Spotify
     if "C" in gesture_list and "1" in gesture_list:

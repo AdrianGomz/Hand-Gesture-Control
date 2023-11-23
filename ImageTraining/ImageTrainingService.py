@@ -9,43 +9,46 @@ class ImageTrainingService():
         self.counter = 0
 
     def getTrainingImage(self, img, boundaries):
-        if boundaries:
-            offset = 10
-            hand_proced_images = []
-            for boundary in boundaries:
-                if boundary[0]-offset<0 or boundary[1]-offset<0:
-                    continue
-                x, y, w, h = boundary
+        try:
+            if boundaries:
+                offset = 10
+                hand_proced_images = []
+                for boundary in boundaries:
+                    if boundary[0]-offset<0 or boundary[1]-offset<0:
+                        continue
+                    x, y, w, h = boundary
 
-                imgBackground = np.ones((self.imageSize, self.imageSize,3),np.uint8)
-
-
-                imgCrop = img[y - offset : y + h + offset,
-                            x - offset : x + w + offset]
-
-                aspectRatio = h / w
-                if aspectRatio > 1:
-                    k = self.imageSize / h
-                    wCal = math.ceil(k * w)
-                    imgResize = cv2.resize(imgCrop,(wCal, self.imageSize))
-                    wGap = math.ceil((self.imageSize - wCal) / 2)
-                    imgBackground[:, wGap:wCal+wGap] = imgResize
-                else:
-                    k = self.imageSize / w
-                    hCal = math.ceil(k * h)
-                    imgResize = cv2.resize(imgCrop,(self.imageSize, hCal))
-                    hGap = math.ceil((self.imageSize - hCal) / 2)
-                    imgBackground[hGap:hCal + hGap, :] = imgResize
+                    imgBackground = np.ones((self.imageSize, self.imageSize,3),np.uint8)
 
 
-                cv2.imshow("TrainerImage",imgBackground)
-                hand_proced_images.append(imgBackground)
+                    imgCrop = img[y - offset : y + h + offset,
+                                x - offset : x + w + offset]
 
-            if cv2.waitKey(1) & 0xFF == ord('s'):
-                self.counter+=1
-                cv2.imwrite(f'trainingImages/b/image_{time.time()}.jpg', imgBackground)
-                print(self.counter)
+                    aspectRatio = h / w
+                    if aspectRatio > 1:
+                        k = self.imageSize / h
+                        wCal = math.ceil(k * w)
+                        imgResize = cv2.resize(imgCrop,(wCal, self.imageSize))
+                        wGap = math.ceil((self.imageSize - wCal) / 2)
+                        imgBackground[:, wGap:wCal+wGap] = imgResize
+                    else:
+                        k = self.imageSize / w
+                        hCal = math.ceil(k * h)
+                        imgResize = cv2.resize(imgCrop,(self.imageSize, hCal))
+                        hGap = math.ceil((self.imageSize - hCal) / 2)
+                        imgBackground[hGap:hCal + hGap, :] = imgResize
 
-            return hand_proced_images
+
+                    cv2.imshow("TrainerImage",imgBackground)
+                    hand_proced_images.append(imgBackground)
+
+                if cv2.waitKey(1) & 0xFF == ord('s'):
+                    self.counter+=1
+                    cv2.imwrite(f'trainingImages/3/image_{time.time()}.jpg', imgBackground)
+                    print(self.counter)
+
+                return hand_proced_images
+        except:
+            pass
 
 
