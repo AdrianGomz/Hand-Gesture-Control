@@ -52,23 +52,16 @@ class SpotifyAdapter:
     
     def skip_to_next(self):
         headers = {"Authorization": "Bearer " + self.access_token}
-        try:
-            requests.post(self.api_url + "/me/player/next", headers=headers)
-        except:
-            pass
+        requests.post(self.api_url + "/me/player/next", headers=headers)
+    
     def skip_to_previous(self):
         headers = {"Authorization": "Bearer "+self.access_token}
-        try:
-            requests.post(self.api_url + "/me/player/previous", headers=headers)
-        except:
-            pass
+        requests.post(self.api_url + "/me/player/previous", headers=headers)
+    
     def toggle_pause_play(self):
         headers = {"Authorization": "Bearer "+self.access_token}
-        try:
-            if self.reproducing:
-                requests.put(self.api_url + "/me/player/pause", headers=headers)
-            else:
-                requests.put(self.api_url + "/me/player/play", headers=headers, data = "{\"position_ms\":0}")
-            self.reproducing = not self.reproducing
-        except:
-            pass
+        if self.reproducing:
+            requests.put(self.api_url + "/me/player/pause", headers=headers)
+        else:
+            requests.put(self.api_url + "/me/player/play", headers=headers, data = "{\"position_ms\":0}")
+        self.reproducing = not self.reproducing
